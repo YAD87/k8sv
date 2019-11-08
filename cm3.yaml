@@ -11,17 +11,22 @@ data:
     - name: Kube Controller down
       rules:
       - alert: Kube kontroller down
-        expr: kube-controller-manager > 1
+        expr: kube-controller-manager_up{} == 0
         for: 1m
+        labels:
+          severity: error
         annotations:
           summary: Kube controller manaher down
     - name: NodeCpuHigh
       rules:
       - alert: NodeCpuHigh
-        expr: kube-controller-manager > 1
-        for: 1m
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
         annotations:
-          summary: NodeCpuHigh
+          summary: "High CPU load (instance {{ $labels.instance }})"
+          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
     - name: NonPodCpuHigh
       rules:
       - alert: NonPodCpuHigh
