@@ -10,13 +10,15 @@ data:
     groups:
     - name: Kube Controller down
       rules:
-      - alert: Kube kontroller down
-        expr: kube-controller-manager_up{} == 0
-        for: 1m
-        labels:
-          severity: error
-        annotations:
-          summary: Kube controller manaher down
+      - alert: KubeControllerManagerDown
+      annotations:
+        message: KubeControllerManager has disappeared from Prometheus target discovery.
+        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerdown
+      expr: |
+        absent(up{job="kube-controller-manager"} == 1)
+      for: 15m
+      labels:
+        severity: critical
     - name: NodeCpuHigh
       rules:
       - alert: NodeCpuHigh
