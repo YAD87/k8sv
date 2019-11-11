@@ -11,13 +11,13 @@ data:
     - name: Kube Controller down
       rules:
       - alert: POD_MEMORY_HIGH_UTILIZATION
-        expr: (sum(rate(container_memory_usage_bytes[5m]))by(pod_name)*100) >90
+        expr: sum(container_memory_usage_bytes) > 1
          for: 1m
          labels:
            severity: warning
          annotations:
-           description: "pod {{$labels.pod}} is using high memory"
-           summary: "HIGH Memory USAGE WARNING for{{$labels.pod}}"
+           description: "check"
+           summary: "check"
             
       
    
