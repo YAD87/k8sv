@@ -9,7 +9,8 @@ data:
   prometheus.rules: |-
     groups:
     - name: Kube Controller down
-      - alert: HostCPUUtilisation
+    rules:
+    - alert: HostCPUUtilisation
       expr: 100 - (avg by(instance) (irate(node_cpu{mode="idle"}[5m])) * 100) > 70
       for: 20m
       labels:
