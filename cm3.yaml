@@ -18,15 +18,6 @@ data:
         annotations:
           description: KubeControllerManager has disappeared from Prometheus target discovery.
     
-      - alert: NodeCpuHigh
-        expr: (100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-          summary: "High CPU load (instance {{ $labels.instance }})"
-         
       - alert: POD_MEMORY_HIGH_UTILIZATION
         expr: (sum(rate(container_memory_usage_bytes[5m]))by(pod_name)*100) >90
          for: 1m
