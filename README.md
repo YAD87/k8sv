@@ -42,5 +42,9 @@ kubectl apply -f https://raw.githubusercontent.com/YAD87/k8sv/master/p-service.y
 git clone https://github.com/devopscube/kube-state-metrics-configs.git
 kubectl apply -f kube-state-metrics-configs/
 
+9. Add Node exporter for monitoring Nodes performance
+
+kubectl appy -f https://raw.githubusercontent.com/YAD87/k8sv/master/node-exporter.yml
+
 
 
