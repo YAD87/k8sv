@@ -11,14 +11,15 @@ data:
     - name: Kube Controller down
       rules:
       - alert: KubeControllerManagerDown
-      annotations:
-        message: KubeControllerManager has disappeared from Prometheus target discovery.
-        runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerdown
-      expr: |
-        absent(up{job="kube-controller-manager"} == 1)
-      for: 15m
-      labels:
-        severity: critical
+        expr: absent(up{job="kube-controller-manager"} == 1)
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          description: KubeControllerManager has disappeared from Prometheus target discovery.
+        
+      
+      
     - name: NodeCpuHigh
       rules:
       - alert: NodeCpuHigh
@@ -39,13 +40,15 @@ data:
     - name: PodMemoryHigh
       rules:
       - alert: POD_MEMORY_HIGH_UTILIZATION
-        annotations:
-          description: "pod {{$labels.pod}} is using high memory"
-          summary: "HIGH Memory USAGE WARNING for{{$labels.pod}}"
         expr: (sum(rate(container_memory_usage_bytes[5m]))by(pod_name)*100) >90
-        for: 1m
-        labels:
-          severity: warning
+         for: 1m
+         labels:
+           severity: warning
+         annotations:
+           description: "pod {{$labels.pod}} is using high memory"
+           summary: "HIGH Memory USAGE WARNING for{{$labels.pod}}"
+        
+       
       
    
   prometheus.yml: |-
