@@ -10,8 +10,7 @@ data:
     groups:
     - name: Kube Controller down
       rules:
-        
-       
+            
       
    
   prometheus.yml: |-
