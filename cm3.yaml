@@ -10,14 +10,6 @@ data:
     groups:
     - name: Kube Controller down
       rules:
-      - alert: KubeControllerManagerDown
-        expr: absent(up{job="kube-controller-manager"} == 1)
-        for: 15m
-        labels:
-          severity: critical
-        annotations:
-          description: KubeControllerManager has disappeared from Prometheus target discovery.
-    
       - alert: POD_MEMORY_HIGH_UTILIZATION
         expr: (sum(rate(container_memory_usage_bytes[5m]))by(pod_name)*100) >90
          for: 1m
