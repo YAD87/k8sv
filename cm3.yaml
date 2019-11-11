@@ -9,16 +9,14 @@ data:
   prometheus.rules: |-
     groups:
     - name: Kube Controller down
-      rules:
-      - alert: POD_MEMORY_HIGH_UTILIZATION
-        expr: sum(container_memory_usage_bytes) > 1
-         for: 1m
-         labels:
-           severity: warning
-         annotations:
-           description: "check"
-           summary: "check"
-            
+      - alert: HostCPUUtilisation
+      expr: 100 - (avg by(instance) (irate(node_cpu{mode="idle"}[5m])) * 100) > 70
+      for: 20m
+      labels:
+        severity: warning
+      annotations:
+         description: 'High CPU utilisation detected for instance {{ $labels.instance_id}} tagged as: {{ $labels.instance_name_tag }}, the utilisation is currently:{{ $value }}%'
+         summary: CPU Utilisation Alert
       
    
   prometheus.yml: |-
