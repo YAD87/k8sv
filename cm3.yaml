@@ -124,6 +124,10 @@ data:
         static_configs:
           - targets: ['kube-state-metrics.kube-system.svc.cluster.local:8080']
           
+      - job_name: 'kube-comtroller-manager'
+        static_configs:
+          - targets: ['kube-controller-manager.kube-system.svc.cluster.local:10252']
+          
       
           
       - job_name: 'kubernetes-nodes-exporter'
